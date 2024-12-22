@@ -1,8 +1,22 @@
 // squares of [1, 2, 3] => [1, 4, 9]
-const squaresOf = function (numbers) { };
+const squaresOf = function (numbers) {
+  return numbers.map(function (number) {
+    return Math.pow(number, 2);
+  })
+};
+
+console.log(squaresOf([1, 2, 3]));
+// console.log = function () { }
 
 // lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
-const lengthsOf = function (strings) { };
+const lengthsOf = function (strings) {
+  return strings.map(function (string) {
+    return string.length;
+  })
+};
+
+console.log(lengthsOf(["apple", "banana", "kiwi"]));
+console.log = function () { }
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
 const uppercaseOf = function (strings) { };
