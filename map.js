@@ -222,13 +222,23 @@ const splitFullNames = function (objects) {
 };
 
 // normalize scores so they fall between 0 and 1 based on the max score from [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }] => [0.8, 1]
-const normalizeScores = function (objects) { };
+const normalizeScores = function (objects) {
+  return objects.map((object) => object.score / 100);
+};
 
 // calculate percentage contribution of each number in [10, 20, 30] (relative to the total sum) => [16.67, 33.33, 50]
-const percentageContributions = function (numbers) { };
+const percentageContributions = function (numbers) {
+  const totalSum = numbers.reduce((sum, num) => sum + num, 0);
+
+  return numbers.map(num => +((num / totalSum) * 100).toFixed(2));
+};
 
 // subtract the smallest number from each number in [3, 8, 1] => [2, 7, 0]
-const subtractMin = function (numbers) { };
+const subtractMin = function (numbers) {
+  const minNum = Math.min(...numbers);
+
+  return numbers.map((number) => number - minNum);
+};
 
 // calculate ranks (1-based, descending) for scores in [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }, { name: "Charlie", score: 90 }] => [2, 1, 3]
 const calculateRanks = function (objects) { };
