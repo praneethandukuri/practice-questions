@@ -1,7 +1,13 @@
 // common functions
-const isLessThan = function (number) {
+const isGreaterThan = function (number) {
   return function (threshold) {
-    return number < threshold;
+    return threshold > number;
+  };
+};
+
+const complement = function (f) {
+  return function (...args) {
+    return !f(args);
   };
 };
 
@@ -10,6 +16,12 @@ const compareObj = function (threshold, attribute, fn) {
 
   return function (object) {
     return compare(object[attribute]);
+  };
+};
+
+const isSame = function (a) {
+  return function (b) {
+    return a === b;
   };
 };
 
@@ -26,7 +38,7 @@ const filterEvenNumbers = function (numbers) {
 
 // words with more than 5 letters ["apple", "banana", "kiwi", "grape"] => ["banana"]
 const isWordLongerThan = function (word) {
-  return isLessThan(5)(word.length);
+  return isGreaterThan(5)(word.length);
 };
 
 const filterLongWords = function (words) {
@@ -36,20 +48,34 @@ const filterLongWords = function (words) {
 // people older than 30 [{name: "Alice", age: 25}, {name: "Bob", age: 35}] => [{name: "Bob", age: 35}]
 
 const filterAdults = function (people) {
-  const comparision = compareObj(30, "age", isLessThan);
+  const comparision = compareObj(30, "age", isGreaterThan);
+
   return people.filter(comparision);
 };
 
 // active users [{username: "alice", active: true}, {username: "bob", active: false}] => [{username: "alice", active: true}]
+const isUserActiveOrNot = function (user) {
+  const compare = compareObj(true, "active", isSame)(user);
+  return compare;
+};
+
 const filterActiveUsers = function (users) {
-  return;
+  return users.filter(isUserActiveOrNot);
 };
 
 // numbers greater than 10 [5, 12, 7, 18, 3] => [12, 18]
-const filterNumbersGreaterThanTen = function (numbers) { };
+const filterNumbersGreaterThanTen = function (numbers) {
+  return numbers.filter(isGreaterThan(10));
+};
 
 // books with more than 200 pages [{title: "Book 1", pages: 150}, {title: "Book 2", pages: 250}] => [{title: "Book 2", pages: 250}]
-const filterLongBooks = function (books) { };
+const addIfMoreThan200pages = function (book) {
+  return compareObj(200, "pages", isGreaterThan)(book);
+};
+
+const filterLongBooks = function (books) {
+  return books.filter(addIfMoreThan200pages);
+};
 
 // users with incomplete profiles [{username: "alice", profileComplete: true}, {username: "bob", profileComplete: false}] => [{username: "bob", profileComplete: false}]
 const filterIncompleteProfiles = function (users) { };
