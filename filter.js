@@ -124,16 +124,47 @@ const filterStudentsWithAllSubjectsPassed = function (students) {
 };
 
 console.log(filterStudentsWithAllSubjectsPassed([{ name: "John", subjects: [{ name: "Math", passed: true }, { name: "Science", passed: true }] }, { name: "Jane", subjects: [{ name: "Math", passed: false }, { name: "Science", passed: true }] }]));
-console.log = function () { }
+// console.log = function () { }
 
 // people whose birthday is this month [{name: "Alice", birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] => [{name: "Alice", birthDate: "2024-12-01"}]
 const filterBirthdaysThisMonth = function (people) { };
 
 // orders that exceed the average order value [{orderId: 1, amount: 20}, {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => [{orderId: 2, amount: 50}]
-const filterHighValueOrders = function (orders) { };
+const filterHighValueOrders = function (orders) {
+  const orderValues = orders.map(function (order) {
+    return order.amount;
+  });
+
+  const averageOrderValue = orderValues.reduce(function (orderValue, total) {
+    return total += orderValue;
+  }, 0) / orders.length;
+
+  return orders.filter(function (order) {
+    return order.amount > averageOrderValue;
+  })
+};
+
+console.log(filterHighValueOrders([{ orderId: 1, amount: 20 }, { orderId: 2, amount: 50 }, { orderId: 3, amount: 10 }]));
+// console.log = function () { }
 
 // books with reviews higher than the average rating [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
-const filterTopRatedBooks = function (books) { };
+const filterTopRatedBooks = function (books) {
+  const ratings = books.map(function (book) {
+    return book.rating;
+  })
+
+  const averageRatings = ratings.reduce(function (rating, total) {
+    return total += rating;
+  }, 0) / books.length;
+
+  return books.filter(function (book) {
+    return book.rating > averageRatings;
+  })
+};
+
+console.log(filterTopRatedBooks([{ title: "Book 1", rating: 4 }, { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }]));
+console.log = function () { }
+
 
 // employees whose salary is higher than the department average [{name: "Alice", salary: 5000, department: "HR"}, {name: "Bob", salary: 7000, department: "HR"}, {name: "Charlie", salary: 4000, department: "IT"}] => [{name: "Bob", salary: 7000, department: "HR"}]
 const filterHighSalaryEmployees = function (employees) { };
