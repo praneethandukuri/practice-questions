@@ -1,32 +1,3 @@
-// common functions
-const isGreaterThan = function (number) {
-  return function (threshold) {
-    return threshold > number;
-  };
-};
-
-const complement = function (f) {
-  return function (...args) {
-    return !f(args);
-  };
-};
-
-const compareObj = function (threshold, attribute, fn) {
-  const compare = fn(threshold);
-
-  return function (object) {
-    return compare(object[attribute]);
-  };
-};
-
-const isSame = function (a) {
-  return function (b) {
-    return a === b;
-  };
-};
-
-// common functions end
-
 // even numbers [1, 2, 3, 4, 5] => [2, 4]
 const filterEvenNumbers = function (numbers) {
   return numbers.filter((number) => (number & 1) === 0);
@@ -352,44 +323,60 @@ const findCountriesThatExist = function (countries, lookup) { };
 // Find numbers that are marked as 'valid' in the lookup object.
 // Input: [10, 20, 30, 40], {10: "valid", 20: "invalid", 30: "valid", 40: "valid"}
 // Output: [10, 30, 40]
-const findValidNumbers = function (numbers, lookup) { };
+const findValidNumbers = function (numbers, lookup) {
+  return numbers.filter(number => lookup[number] === "valid");
+};
 
 // Find users whose account status is 'active' from the lookup object.
 // Input: ["Alice", "Bob", "Charlie"], { "Alice": { status: "active" }, "Bob": { status: "inactive" }, "Charlie": { status: "active" } }
 // Output: ["Alice", "Charlie"]
-const findActiveUsers = function (users, lookup) { };
+const findActiveUsers = function (users, lookup) {
+  return users.filter(user => lookup[user] && lookup[user].status === 'active');
+};
 
 // Find strings where the length of the string is greater than the corresponding numeric threshold in the lookup object.
 // Input: ["apple", "banana", "kiwi"], { "apple": 4, "banana": 5, "kiwi": 6 }
 // Output: ["banana"]
-const findStringsAboveThreshold = function (strings, lookup) { };
-
+const findStringsAboveThreshold = function (strings, lookup) {
+  return strings.filter((string) => string.length > lookup[string]);
+};
 // Find the products whose price is less than a given threshold from the lookup object.
 // Input: ["Laptop", "Phone", "Tablet"], { "Laptop": { price: 1000 }, "Phone": { price: 500 }, "Tablet": { price: 300 } }
 // Output: ["Phone", "Tablet"]
-const findAffordableProducts = function (products, lookup) { };
+const findAffordableProducts = function (products, lookup, threshold) {
+  return products.filter(product => lookup[product] && lookup[product].price < threshold);
+};
 
 // Find students who have scored more than a given score in their exam from the lookup object.
 // Input: ["John", "Alice", "Bob"], { "John": 85, "Alice": 92, "Bob": 70 }
 // Output: ["John", "Alice"]
-const findHighScoringStudents = function (students, lookup) { };
+const findHighScoringStudents = function (students, lookup, threshold) {
+  return students.filter((student) => lookup[student] > threshold);
+};
 
 // Find employees who have been at the company for more than 5 years based on the lookup object.
 // Input: ["John", "Alice", "Bob"], { "John": { yearsAtCompany: 6 }, "Alice": { yearsAtCompany: 4 }, "Bob": { yearsAtCompany: 7 } }
 // Output: ["John", "Bob"]
-const findLongTermEmployees = function (employees, lookup) { };
+const findLongTermEmployees = function (employees, lookup) {
+  return employees.filter((employee) => lookup[employee] && lookup[employee].yearsAtCompany > 5);
+};
 
 // Find cities with a population greater than a threshold provided in the lookup object.
 // Input: ["London", "Paris", "Tokyo"], { "London": { population: 9000000 }, "Paris": { population: 2200000 }, "Tokyo": { population: 14000000 } }
 // Output: ["London", "Tokyo"]
-const findLargeCities = function (cities, lookup) { };
-
+const findLargeCities = function (cities, lookup, threshold) {
+  return cities.filter((city) => lookup[city] && lookup[city].population > threshold);
+};
 // Find items in an inventory whose quantity is greater than 10 based on the lookup object.
 // Input: ["item1", "item2", "item3"], { "item1": { quantity: 15 }, "item2": { quantity: 5 }, "item3": { quantity: 20 } }
 // Output: ["item1", "item3"]
-const findInStockItems = function (items, lookup) { };
+const findInStockItems = function (items, lookup) {
+  return items.filter((item) => lookup[item] && lookup[item].quantity > 10);
+};
 
 // Find animals whose habitat matches the required type from the lookup object.
 // Input: ["Lion", "Elephant", "Shark"], { "Lion": { habitat: "Jungle" }, "Elephant": { habitat: "Jungle" }, "Shark": { habitat: "Ocean" } } , "Jungle"
 // Output: ["Lion", "Elephant"]
-const findAnimalsByHabitat = function (animals, lookup) { };
+const findAnimalsByHabitat = function (animals, lookup, habitatType) {
+  return animals.filter((animal) => lookup[animal] && lookup[animal].habitat === habitatType);
+};
