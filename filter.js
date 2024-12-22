@@ -201,7 +201,7 @@ const filterCitiesAboveMedianPopulation = function (cities) {
 
 console.log(filterCitiesAboveMedianPopulation([{ name: "City A", population: 2000 }, { name: "City B", population: 5000 }, { name: "City C", population: 3000 }]));
 
-console.log = function () { }
+// console.log = function () { }
 
 // posts with more than the average number of likes [{postId: 1, likes: 100}, {postId: 2, likes: 200}, {postId: 3, likes: 150}] => [{postId: 2, likes: 200}]
 const filterPopularPosts = function (posts) {
@@ -209,7 +209,7 @@ const filterPopularPosts = function (posts) {
     return post.likes;
   });
 
-  const likesAverage = average(likes, posts.length);
+  const likesAverage = average(likes);
 
   return posts.filter(function (post) {
     return post.likes > likesAverage;
@@ -217,13 +217,34 @@ const filterPopularPosts = function (posts) {
 };
 
 console.log(filterPopularPosts([{ postId: 1, likes: 100 }, { postId: 2, likes: 200 }, { postId: 3, likes: 150 }]));
-console.log = function () { }
+// console.log = function () { }
 
 // users who have posted more than the average number of posts [{username: "Alice", postCount: 5}, {username: "Bob", postCount: 8}, {username: "Charlie", postCount: 3}] => [{username: "Bob", postCount: 8}]
-const filterActiveUsersByPostCount = function (users) { };
+const filterActiveUsersByPostCount = function (users) {
+  const posts = users.map(function (user) {
+    return user.postCount;
+  });
+
+  const postsAverage = average(posts);
+
+  return users.filter(function (user) {
+    return user.postCount > postsAverage;
+  })
+};
+
+console.log(filterActiveUsersByPostCount([{ username: "Alice", postCount: 5 }, { username: "Bob", postCount: 8 }, { username: "Charlie", postCount: 3 }]));
+
+// console.log = function () {}
 
 // filter people older than a certain age [{name: "Alice", age: 25}, {name: "Bob", age: 30}, {name: "Charlie", age: 22}] => [{name: "Bob", age: 30}]
-const filterByAge = function (people, age) { };
+const filterByAge = function (people, age) {
+  return people.filter(function (people) {
+    return people.age > age;
+  })
+};
+
+console.log(filterByAge([{ name: "Alice", age: 25 }, { name: "Bob", age: 30 }, { name: "Charlie", age: 22 }], 25));
+console.log = function () { }
 
 // filter products that are cheaper than a given price [{name: "item1", price: 20}, {name: "item2", price: 50}, {name: "item3", price: 10}] => [{name: "item1", price: 20}, {name: "item3", price: 10}]
 const filterByPrice = function (products, price) { };
