@@ -252,7 +252,10 @@ console.log("16.  How many individuals share at least one hobby with Ramesh?");
 
 console.log("17. Which pet is the youngest, and what is its name?");
 
-const youngestPet = function (people) {};
+const youngestPet = (people) => {
+  const pets = people.flatMap((people) => people.pets);
+  return pets.reduce((pet1, pet2) => (pet1.age < pet2.age ? pet1 : pet2)).name;
+};
 
 console.log(youngestPet(people));
 
@@ -274,7 +277,9 @@ console.log(individualsLiveInCitiesStartingWithLetterB(people));
 console.log("20. Which individuals do not own any pets?");
 
 const individualsNotHaveOwnPets = function (people) {
-  return people.filter((people) => people.pets.length < 0).length;
+  return people
+    .filter((people) => people.pets.length < 0)
+    .map((people) => people.name);
 };
 
 console.log(individualsNotHaveOwnPets(people));
