@@ -101,15 +101,13 @@ const noOfpeopleHavingCar = (people) =>
 
 // ------------------------------Question3------------------------------------
 
-const noOfPetsFullyVaccinated = function (people) {
-  return pets(people).filter((pets) => pets.isVaccinated).length;
-};
+const noOfPetsFullyVaccinated = (people) =>
+  pets(people).filter((pets) => pets.isVaccinated).length;
 
 // ------------------------------Question4------------------------------------
 
-const nameOfThePetsAndTypes = function (people) {
-  return pets(people).map((pet) => pet.name + " - " + pet.animalType);
-};
+const nameOfThePetsAndTypes = (people) =>
+  pets(people).map(({ name, animalType }) => name + " - " + animalType);
 
 // ------------------------------Question5------------------------------------
 
@@ -193,12 +191,11 @@ const vaccinatedPetstoPeopleNotHavingCars = function (people) {
 // ------------------------------Question14------------------------------------
 
 const occurances = function (resultObj, animalType) {
-  if (animalType in resultObj) {
-    resultObj[animalType] = resultObj[animalType] + 1;
-    return resultObj;
-  }
+  resultObj[animalType] =
+    animalType in resultObj
+      ? resultObj[animalType] + 1
+      : (resultObj[animalType] = 1);
 
-  resultObj[animalType] = 1;
   return resultObj;
 };
 
@@ -208,17 +205,15 @@ const commonPet = function (animal1, animal2) {
 
 const mostCommonTypeOfPet = function (people) {
   const allPetTypes = pets(people).map(({ animalType }) => animalType);
+  const animalAndCount = Object.entries(allPetTypes.reduce(occurances, {}));
 
-  return Object.entries(allPetTypes.reduce(occurances, {})).reduce(
-    commonPet
-  )[0];
+  return animalAndCount.reduce(commonPet)[0];
 };
 
 // ------------------------------Question15------------------------------------
 
-const noOfIndividualsHaveMoreThan2Hobbies = function (people) {
-  return people.filter((people) => people.hobbies.length > 2).length;
-};
+const noOfIndividualsHaveMoreThan2Hobbies = (people) =>
+  people.filter((people) => people.hobbies.length > 2).length;
 
 // ------------------------------Question16------------------------------------
 
@@ -234,10 +229,8 @@ const youngestPet = (people) => {
 
 // ------------------------------Question19------------------------------------
 
-const individualsLiveInCitiesStartingWithLetterB = function (people) {
-  const cities = people.map((people) => people.city);
-  return cities.filter((city) => city.startsWith("B")).length;
-};
+const individualsLiveInCitiesStartingWithLetterB = (people) =>
+  people.map(({ city }) => city).filter((city) => city.startsWith("B")).length;
 
 // ------------------------------Question20------------------------------------
 
